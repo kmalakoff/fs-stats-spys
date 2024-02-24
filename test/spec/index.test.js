@@ -1,14 +1,14 @@
-var assert = require('assert');
-var generate = require('fs-generate');
-var rimraf = require('rimraf');
-var path = require('path');
-var fs = require('fs');
-var Iterator = require('fs-iterator');
+const assert = require('assert');
+const generate = require('fs-generate');
+const rimraf = require('rimraf');
+const path = require('path');
+const fs = require('fs');
+const Iterator = require('fs-iterator');
 
-var statsSpys = require('../..');
+const statsSpys = require('fs-stats-spys');
 
-var TEST_DIR = path.resolve(path.join(__dirname, '..', '..', '.tmp', 'test'));
-var STRUCTURE = {
+const TEST_DIR = path.resolve(path.join(__dirname, '..', '..', '.tmp', 'test'));
+const STRUCTURE = {
   file1: 'a',
   file2: 'b',
   dir1: null,
@@ -20,26 +20,26 @@ var STRUCTURE = {
   'dir3/filelink2': '~dir2/file1',
 };
 
-describe('fs-stats-spys', function () {
-  after(function (done) {
+describe('fs-stats-spys', () => {
+  after((done) => {
     rimraf(TEST_DIR, done);
   });
-  beforeEach(function (done) {
-    rimraf(TEST_DIR, function () {
+  beforeEach((done) => {
+    rimraf(TEST_DIR, () => {
       generate(TEST_DIR, STRUCTURE, done);
     });
   });
 
-  describe('stats', function () {
-    it('stat', function (done) {
-      var spys = statsSpys();
+  describe('stats', () => {
+    it('stat', (done) => {
+      const spys = statsSpys();
 
-      var iterator = new Iterator(TEST_DIR, { alwaysStat: true, lstat: false });
+      const iterator = new Iterator(TEST_DIR, { alwaysStat: true, lstat: false });
       iterator.forEach(
-        function (entry) {
+        (entry) => {
           spys(entry.stats);
         },
-        function (err) {
+        (err) => {
           assert.ok(!err);
           assert.equal(spys.dir.callCount, 5);
           assert.equal(spys.file.callCount, 7);
@@ -49,15 +49,15 @@ describe('fs-stats-spys', function () {
       );
     });
 
-    it('lstat', function (done) {
-      var spys = statsSpys();
+    it('lstat', (done) => {
+      const spys = statsSpys();
 
-      var iterator = new Iterator(TEST_DIR, { alwaysStat: true, lstat: true });
+      const iterator = new Iterator(TEST_DIR, { alwaysStat: true, lstat: true });
       iterator.forEach(
-        function (entry) {
+        (entry) => {
           spys(entry.stats);
         },
-        function (err) {
+        (err) => {
           assert.ok(!err);
           assert.equal(spys.dir.callCount, 5);
           assert.equal(spys.file.callCount, 5);
@@ -68,16 +68,16 @@ describe('fs-stats-spys', function () {
     });
   });
 
-  describe('dirent', function () {
-    it('stat', function (done) {
-      var spys = statsSpys();
+  describe('dirent', () => {
+    it('stat', (done) => {
+      const spys = statsSpys();
 
-      var iterator = new Iterator(TEST_DIR, { lstat: false });
+      const iterator = new Iterator(TEST_DIR, { lstat: false });
       iterator.forEach(
-        function (entry) {
+        (entry) => {
           spys(entry.stats);
         },
-        function (err) {
+        (err) => {
           assert.ok(!err);
           if (fs.Dirent) {
             assert.equal(spys.dir.callCount, 5);
@@ -93,15 +93,15 @@ describe('fs-stats-spys', function () {
       );
     });
 
-    it('lstat', function (done) {
-      var spys = statsSpys();
+    it('lstat', (done) => {
+      const spys = statsSpys();
 
-      var iterator = new Iterator(TEST_DIR, { lstat: true });
+      const iterator = new Iterator(TEST_DIR, { lstat: true });
       iterator.forEach(
-        function (entry) {
+        (entry) => {
           spys(entry.stats);
         },
-        function (err) {
+        (err) => {
           assert.ok(!err);
           assert.equal(spys.dir.callCount, 5);
           assert.equal(spys.file.callCount, 5);
