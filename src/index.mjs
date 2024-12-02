@@ -1,6 +1,6 @@
-var sinon = require('sinon');
+import sinon from 'sinon';
 
-module.exports = function statsSpys() {
+export default function statsSpys() {
   function spys(stats) {
     if (stats.isSymbolicLink()) spys.link(stats);
     else if (stats.isDirectory()) spys.dir(stats);
@@ -13,4 +13,4 @@ module.exports = function statsSpys() {
   spys.callCount = 0;
 
   return spys;
-};
+}
