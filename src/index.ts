@@ -1,5 +1,7 @@
+import type { Stats } from 'fs';
+
 function createSpy() {
-  function spy() {
+  function spy(_stats?: Stats) {
     spy.callCount++;
   }
   spy.callCount = 0;
@@ -7,7 +9,7 @@ function createSpy() {
 }
 
 export default function statsSpys() {
-  function spys(stats) {
+  function spys(stats: Stats) {
     if (stats.isSymbolicLink()) spys.link(stats);
     else if (stats.isDirectory()) spys.dir(stats);
     else if (stats.isFile()) spys.file(stats);
