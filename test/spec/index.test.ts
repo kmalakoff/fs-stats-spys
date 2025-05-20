@@ -1,12 +1,15 @@
-const assert = require('assert');
-const generate = require('fs-generate');
-const rimraf2 = require('rimraf2');
-const path = require('path');
-const fs = require('fs');
-const Iterator = require('fs-iterator');
+import assert from 'assert';
+import fs from 'fs';
+import path from 'path';
+import url from 'url';
+import generate from 'fs-generate';
+import Iterator, { type Entry } from 'fs-iterator';
+import rimraf2 from 'rimraf2';
 
-const statsSpys = require('fs-stats-spys');
+// @ts-ignore
+import statsSpys from 'fs-stats-spys';
 
+const __dirname = path.dirname(typeof __filename !== 'undefined' ? __filename : url.fileURLToPath(import.meta.url));
 const TEST_DIR = path.join(path.join(__dirname, '..', '..', '.tmp', 'test'));
 const STRUCTURE = {
   file1: 'a',
@@ -36,7 +39,7 @@ describe('fs-stats-spys', () => {
 
       const iterator = new Iterator(TEST_DIR, { alwaysStat: true, lstat: false });
       iterator.forEach(
-        (entry) => {
+        (entry: Entry): undefined => {
           spys(entry.stats);
         },
         (err) => {
@@ -54,7 +57,7 @@ describe('fs-stats-spys', () => {
 
       const iterator = new Iterator(TEST_DIR, { alwaysStat: true, lstat: true });
       iterator.forEach(
-        (entry) => {
+        (entry: Entry): undefined => {
           spys(entry.stats);
         },
         (err) => {
@@ -74,7 +77,7 @@ describe('fs-stats-spys', () => {
 
       const iterator = new Iterator(TEST_DIR, { lstat: false });
       iterator.forEach(
-        (entry) => {
+        (entry: Entry): undefined => {
           spys(entry.stats);
         },
         (err) => {
@@ -98,7 +101,7 @@ describe('fs-stats-spys', () => {
 
       const iterator = new Iterator(TEST_DIR, { lstat: true });
       iterator.forEach(
-        (entry) => {
+        (entry: Entry): undefined => {
           spys(entry.stats);
         },
         (err) => {
