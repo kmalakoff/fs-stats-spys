@@ -29,7 +29,9 @@ describe('fs-stats-spys', () => {
   });
   beforeEach((done) => {
     rimraf2(TEST_DIR, { disableGlob: true }, () => {
-      generate(TEST_DIR, STRUCTURE, done);
+      generate(TEST_DIR, STRUCTURE, (err) => {
+        done(err);
+      });
     });
   });
 
@@ -43,7 +45,10 @@ describe('fs-stats-spys', () => {
           spys(entry.stats);
         },
         (err) => {
-          if (err) return done(err.message);
+          if (err) {
+            done(err.message);
+            return;
+          }
           assert.equal(spys.dir.callCount, 5);
           assert.equal(spys.file.callCount, 7);
           assert.equal(spys.link.callCount, 0);
@@ -61,7 +66,10 @@ describe('fs-stats-spys', () => {
           spys(entry.stats);
         },
         (err) => {
-          if (err) return done(err.message);
+          if (err) {
+            done(err.message);
+            return;
+          }
           assert.equal(spys.dir.callCount, 5);
           assert.equal(spys.file.callCount, 5);
           assert.equal(spys.link.callCount, 2);
@@ -81,7 +89,10 @@ describe('fs-stats-spys', () => {
           spys(entry.stats);
         },
         (err) => {
-          if (err) return done(err.message);
+          if (err) {
+            done(err.message);
+            return;
+          }
           if (fs.Dirent) {
             assert.equal(spys.dir.callCount, 5);
             assert.equal(spys.file.callCount, 5);
@@ -105,7 +116,10 @@ describe('fs-stats-spys', () => {
           spys(entry.stats);
         },
         (err) => {
-          if (err) return done(err.message);
+          if (err) {
+            done(err.message);
+            return;
+          }
           assert.equal(spys.dir.callCount, 5);
           assert.equal(spys.file.callCount, 5);
           assert.equal(spys.link.callCount, 2);
