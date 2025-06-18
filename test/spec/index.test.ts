@@ -1,13 +1,12 @@
 import assert from 'assert';
 import fs from 'fs';
-import path from 'path';
-import url from 'url';
 import generate from 'fs-generate';
 import Iterator, { type Entry } from 'fs-iterator';
-import rimraf2 from 'rimraf2';
-
 // @ts-ignore
 import statsSpys from 'fs-stats-spys';
+import path from 'path';
+import rimraf2 from 'rimraf2';
+import url from 'url';
 
 const __dirname = path.dirname(typeof __filename !== 'undefined' ? __filename : url.fileURLToPath(import.meta.url));
 const TEST_DIR = path.join(path.join(__dirname, '..', '..', '.tmp', 'test'));
@@ -29,7 +28,9 @@ describe('fs-stats-spys', () => {
   });
   beforeEach((done) => {
     rimraf2(TEST_DIR, { disableGlob: true }, () => {
-      generate(TEST_DIR, STRUCTURE, done);
+      generate(TEST_DIR, STRUCTURE, (err) => {
+        done(err);
+      });
     });
   });
 
@@ -43,7 +44,10 @@ describe('fs-stats-spys', () => {
           spys(entry.stats);
         },
         (err) => {
-          if (err) return done(err.message);
+          if (err) {
+            done(err.message);
+            return;
+          }
           assert.equal(spys.dir.callCount, 5);
           assert.equal(spys.file.callCount, 7);
           assert.equal(spys.link.callCount, 0);
@@ -61,7 +65,10 @@ describe('fs-stats-spys', () => {
           spys(entry.stats);
         },
         (err) => {
-          if (err) return done(err.message);
+          if (err) {
+            done(err.message);
+            return;
+          }
           assert.equal(spys.dir.callCount, 5);
           assert.equal(spys.file.callCount, 5);
           assert.equal(spys.link.callCount, 2);
@@ -81,7 +88,10 @@ describe('fs-stats-spys', () => {
           spys(entry.stats);
         },
         (err) => {
-          if (err) return done(err.message);
+          if (err) {
+            done(err.message);
+            return;
+          }
           if (fs.Dirent) {
             assert.equal(spys.dir.callCount, 5);
             assert.equal(spys.file.callCount, 5);
@@ -105,7 +115,10 @@ describe('fs-stats-spys', () => {
           spys(entry.stats);
         },
         (err) => {
-          if (err) return done(err.message);
+          if (err) {
+            done(err.message);
+            return;
+          }
           assert.equal(spys.dir.callCount, 5);
           assert.equal(spys.file.callCount, 5);
           assert.equal(spys.link.callCount, 2);
