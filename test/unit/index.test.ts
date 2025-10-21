@@ -2,7 +2,6 @@ import assert from 'assert';
 import fs from 'fs';
 import generate from 'fs-generate';
 import Iterator, { type Entry } from 'fs-iterator';
-// @ts-ignore
 import statsSpys from 'fs-stats-spys';
 import path from 'path';
 import rimraf2 from 'rimraf2';
