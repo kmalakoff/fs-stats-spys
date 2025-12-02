@@ -1,1 +1,1 @@
-ignores: ["fs-stats-spys"]
+ignores: ["node-version-use", "ts-dev-stack", "@biomejs/biome", "fs-stats-spys"]
