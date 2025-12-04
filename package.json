@@ -42,8 +42,8 @@
     "@types/node": "*",
     "fs-generate": "*",
     "fs-iterator": "*",
+    "fs-remove-compat": "*",
     "node-version-use": "*",
-    "rimraf2": "*",
     "ts-dev-stack": "*",
     "tsds-config": "*"
   },
