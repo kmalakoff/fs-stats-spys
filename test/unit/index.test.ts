@@ -39,7 +39,7 @@ describe('fs-stats-spys', () => {
 
       const iterator = new Iterator(TEST_DIR, { alwaysStat: true, lstat: false });
       iterator.forEach(
-        (entry: Entry): undefined => {
+        (entry: Entry): void => {
           spys(entry.stats);
         },
         (err) => {
@@ -60,7 +60,7 @@ describe('fs-stats-spys', () => {
 
       const iterator = new Iterator(TEST_DIR, { alwaysStat: true, lstat: true });
       iterator.forEach(
-        (entry: Entry): undefined => {
+        (entry: Entry): void => {
           spys(entry.stats);
         },
         (err) => {
@@ -83,7 +83,7 @@ describe('fs-stats-spys', () => {
 
       const iterator = new Iterator(TEST_DIR, { lstat: false });
       iterator.forEach(
-        (entry: Entry): undefined => {
+        (entry: Entry): void => {
           spys(entry.stats);
         },
         (err) => {
@@ -110,7 +110,7 @@ describe('fs-stats-spys', () => {
 
       const iterator = new Iterator(TEST_DIR, { lstat: true });
       iterator.forEach(
-        (entry: Entry): undefined => {
+        (entry: Entry): void => {
           spys(entry.stats);
         },
         (err) => {
