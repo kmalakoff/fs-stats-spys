@@ -1,1 +1,1 @@
-ignores: ["node-version-use", "ts-dev-stack", "fs-stats-spys"]
+ignores: ["fs-stats-spys", "node-version-use", "ts-dev-stack"]
